@@ -10928,3 +10928,8 @@ a.text-dark:focus {
   }
 }
 
+.test {
+  color: red;
+  font-size: 12px;
+}
+

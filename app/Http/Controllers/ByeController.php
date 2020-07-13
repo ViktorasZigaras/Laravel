@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 class ByeController extends Controller
 {
-    public function doneMethod() : string {
-        return 'method';
+    public function doneMethod() {
+        // return 'method';
+        return view('bye.bye');
     }
 }
