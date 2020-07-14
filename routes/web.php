@@ -13,19 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () {return view('welcome');});
 
-Route::get('hi', function () {
-    return 'HI!';
-});
+// Route::get('hi', function () {return 'HI!';});
 
-Route::get('bye', function () {
-    return view('bye.bye');
-});
+// Route::get('bye', function () {return view('bye.bye');});
 
-Route::get('byebye', 'ByeController@doneMethod');
+Route::prefix('count')->group(function () {
+
+    Route::get('/sum/{a}/{b}', 'CountController@sumMethod');
+
+    Route::get('/dif/{a}/{b}', 'CountController@difMethod');
+
+    Route::get('/mul/{a}/{b}', 'CountController@mulMethod');
+
+    Route::get('/div/{a}/{b}', 'CountController@divMethod');
+
+});
 
 Auth::routes();
 
