@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Author;
 use Illuminate\Http\Request;
+use Validator;
 
 class AuthorController extends Controller
 {
@@ -36,11 +37,21 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(),
+        [
+            'author_name' => ['required', 'min:3', 'max:64'],
+            'author_surname' => ['required', 'min:3', 'max:64'],
+        ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
         $author = new Author;
         $author->name = $request->author_name;
         $author->surname = $request->author_surname;
         $author->save();
-        return redirect()->route('author.index');
+        return redirect()->route('author.index')->with('success_message', '<Author Created>');
     }
 
     /**
@@ -74,10 +85,20 @@ class AuthorController extends Controller
      */
     public function update(Request $request, Author $author)
     {
+        $validator = Validator::make($request->all(),
+        [
+            'author_name' => ['required', 'min:3', 'max:64'],
+            'author_surname' => ['required', 'min:3', 'max:64'],
+        ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
         $author->name = $request->author_name;
         $author->surname = $request->author_surname;
         $author->save();
-        return redirect()->route('author.index');
+        return redirect()->route('author.index')->with('success_message', '<Author Updated>');
     }
 
     /**
@@ -88,10 +109,10 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
-        if($author->authorBooks->count()){
-            return 'Trinti negalima, nes turi knygų';
+        if($author->authorBooks->count()) {
+            return redirect()->route('author.index')->with('info_message', '<Author Has Books>');
         }
         $author->delete();
-        return redirect()->route('author.index');
+        return redirect()->route('author.index')->with('success_message', '<Author Deleted>');
     }
 }

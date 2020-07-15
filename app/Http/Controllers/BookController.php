@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Book;
 use App\Author;
 use Illuminate\Http\Request;
+use Validator;
 
 class BookController extends Controller
 {
@@ -39,6 +40,18 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(),
+        [
+            'book_title' => ['required', 'min:8', 'max:64'],
+            'book_isbn' => ['required', 'min:8', 'max:32'],
+            'book_pages' => ['required', 'min:1'],
+            'book_about' => ['required', 'min:0', 'max:128'],
+        ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
         $book = new Book;
         $book->title = $request->book_title;
         $book->isbn = $request->book_isbn;
@@ -46,7 +59,7 @@ class BookController extends Controller
         $book->about = $request->book_about;
         $book->author_id = $request->author_id;
         $book->save();
-        return redirect()->route('book.index');
+        return redirect()->route('book.index')->with('success_message', '<Book Created>');
     }
 
     /**
@@ -81,13 +94,25 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
+        $validator = Validator::make($request->all(),
+        [
+            'book_title' => ['required', 'min:8', 'max:64'],
+            'book_isbn' => ['required', 'min:8', 'max:32'],
+            'book_pages' => ['required', 'min:1'],
+            'book_about' => ['required', 'min:0', 'max:128'],
+        ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
         $book->title = $request->book_title;
         $book->isbn = $request->book_isbn;
         $book->pages = $request->book_pages;
         $book->about = $request->book_about;
         $book->author_id = $request->author_id;
         $book->save();
-        return redirect()->route('book.index');
+        return redirect()->route('book.index')->with('success_message', '<Book Updated>');
     }
 
     /**
@@ -99,6 +124,6 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         $book->delete();
-        return redirect()->route('book.index');
+        return redirect()->route('book.index')->with('success_message', '<Book Deleted>');
     }
 }
