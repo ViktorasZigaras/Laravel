@@ -11,25 +11,25 @@
 
                         <div class="form-group">
                            <label>Title</label>
-                           <input type="text" name="book_title" value="{{old('book_title',$book->title)}}" class="form-control">
+                           <input type="text" name="title" value="{{old('title',$book->title)}}" class="form-control">
                            <small class="form-text text-muted">Book Title</small>
                         </div>
 
                         <div class="form-group">
                            <label>ISBN</label>
-                           <input type="text" name="book_isbn" value="{{old('book_isbn',$book->isbn)}}" class="form-control">
+                           <input type="text" name="isbn" value="{{old('isbn',$book->isbn)}}" class="form-control">
                            <small class="form-text text-muted">Book ISBN</small>
                         </div>
 
                         <div class="form-group">
                            <label>Pages</label>
-                           <input type="text" name="book_pages" value="{{old('book_pages',$book->pages)}}" class="form-control">
+                           <input type="text" name="pages" value="{{old('pages',$book->pages)}}" class="form-control">
                            <small class="form-text text-muted">Page Count</small>
                         </div>
 
                         <div class="form-group">
                            <label>About</label>
-                           <textarea type="text" name="book_about" class="form-control" id="summernote">{{old('book_about',$book->about)}}</textarea>
+                           <textarea type="text" name="about" class="form-control" id="summernote">{{old('about',$book->about)}}</textarea>
                            <small class="form-text text-muted">Book Summary</small>
                         </div>
 

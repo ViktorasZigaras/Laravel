@@ -16,8 +16,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
-        return view('book.index', ['books' => $books]);
+        return view('book.index', ['books' => Book::all()->sortBy('title')]);
     }
 
     /**
@@ -27,9 +26,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        // return view('book.create');
-        $authors = Author::all();
-        return view('book.create', ['authors' => $authors]);
+        return view('book.create', ['authors' => Author::all()->sortBy('name')]);
     }
 
     /**
@@ -42,22 +39,18 @@ class BookController extends Controller
     {
         $validator = Validator::make($request->all(),
         [
-            'book_title' => ['required', 'min:8', 'max:64'],
-            'book_isbn' => ['required', 'min:8', 'max:32'],
-            'book_pages' => ['required', 'min:1'],
-            'book_about' => ['required', 'min:0', 'max:128'],
+            'title' => ['required', 'min:8', 'max:64'],
+            'isbn' => ['required', 'min:8', 'max:32'],
+            'pages' => ['required', 'min:1'],
+            'about' => ['required', 'min:0', 'max:128'],
+            'author_id' => ['required'],
         ]
         );
         if ($validator->fails()) {
             $request->flash();
             return redirect()->back()->withErrors($validator);
         }
-        $book = new Book;
-        $book->title = $request->book_title;
-        $book->isbn = $request->book_isbn;
-        $book->pages = $request->book_pages;
-        $book->about = $request->book_about;
-        $book->author_id = $request->author_id;
+        $book = Book::create($request->all());
         $book->save();
         return redirect()->route('book.index')->with('success_message', '<Book Created>');
     }
@@ -70,7 +63,8 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        // $a = Book::where('name', 'ona')->first();
+        // return view show
     }
 
     /**
@@ -81,8 +75,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        $authors = Author::all();
-        return view('book.edit', ['book' => $book, 'authors' => $authors]);
+        return view('book.edit', ['book' => $book, 'authors' => Author::all()]);
     }
 
     /**
@@ -96,21 +89,18 @@ class BookController extends Controller
     {
         $validator = Validator::make($request->all(),
         [
-            'book_title' => ['required', 'min:8', 'max:64'],
-            'book_isbn' => ['required', 'min:8', 'max:32'],
-            'book_pages' => ['required', 'min:1'],
-            'book_about' => ['required', 'min:0', 'max:128'],
+            'title' => ['required', 'min:8', 'max:64'],
+            'isbn' => ['required', 'min:8', 'max:32'],
+            'pages' => ['required', 'min:1'],
+            'about' => ['required', 'min:0', 'max:128'],
+            'author_id' => ['required'],
         ]
         );
         if ($validator->fails()) {
             $request->flash();
             return redirect()->back()->withErrors($validator);
         }
-        $book->title = $request->book_title;
-        $book->isbn = $request->book_isbn;
-        $book->pages = $request->book_pages;
-        $book->about = $request->book_about;
-        $book->author_id = $request->author_id;
+        $book->fill($request->all());
         $book->save();
         return redirect()->route('book.index')->with('success_message', '<Book Updated>');
     }

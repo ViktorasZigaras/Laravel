@@ -15,8 +15,9 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Author::all();
-        return view('author.index', ['authors' => $authors]);
+        // $authors = Author::orderBy('field', 'asc/desc')->get(); + multiple order bys for more sorting
+        // $authors = Author::all()->sortBy/Desc('field');
+        return view('author.index', ['authors' => Author::all()->sortBy('name')]);
     }
 
     /**
@@ -39,17 +40,15 @@ class AuthorController extends Controller
     {
         $validator = Validator::make($request->all(),
         [
-            'author_name' => ['required', 'min:3', 'max:64'],
-            'author_surname' => ['required', 'min:3', 'max:64'],
+            'name' => ['required', 'min:3', 'max:64'],
+            'surname' => ['required', 'min:3', 'max:64'],
         ]
         );
         if ($validator->fails()) {
             $request->flash();
             return redirect()->back()->withErrors($validator);
         }
-        $author = new Author;
-        $author->name = $request->author_name;
-        $author->surname = $request->author_surname;
+        $author = Author::create($request->all());
         $author->save();
         return redirect()->route('author.index')->with('success_message', '<Author Created>');
     }
@@ -87,16 +86,15 @@ class AuthorController extends Controller
     {
         $validator = Validator::make($request->all(),
         [
-            'author_name' => ['required', 'min:3', 'max:64'],
-            'author_surname' => ['required', 'min:3', 'max:64'],
+            'name' => ['required', 'min:3', 'max:64'],
+            'surname' => ['required', 'min:3', 'max:64'],
         ]
         );
         if ($validator->fails()) {
             $request->flash();
             return redirect()->back()->withErrors($validator);
         }
-        $author->name = $request->author_name;
-        $author->surname = $request->author_surname;
+        $author->fill($request->all());
         $author->save();
         return redirect()->route('author.index')->with('success_message', '<Author Updated>');
     }

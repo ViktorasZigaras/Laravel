@@ -32,7 +32,7 @@ Route::prefix('count')->group(function () {
 
 ###
 
-Route::group(['prefix' => 'authors'], function(){
+Route::group(['prefix' => 'authors'], function() {
     Route::get('', 'AuthorController@index')->name('author.index');
     Route::get('create', 'AuthorController@create')->name('author.create');
     Route::post('store', 'AuthorController@store')->name('author.store');
@@ -40,9 +40,9 @@ Route::group(['prefix' => 'authors'], function(){
     Route::post('update/{author}', 'AuthorController@update')->name('author.update');
     Route::post('delete/{author}', 'AuthorController@destroy')->name('author.destroy');
     Route::get('show/{author}', 'AuthorController@show')->name('author.show');
- });
+});
 
-Route::group(['prefix' => 'books'], function(){
+Route::group(['prefix' => 'books'], function() {
     Route::get('', 'BookController@index')->name('book.index');
     Route::get('create', 'BookController@create')->name('book.create');
     Route::post('store', 'BookController@store')->name('book.store');
