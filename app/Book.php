@@ -7,9 +7,9 @@ use App\Author;
 
 class Book extends Model
 {
-    protected $fillable = array('title', 'isbn', 'pages', 'about', 'author_id');
+    protected $fillable = ['title', 'isbn', 'pages', 'about', 'author_id'];
 
-    public function bookAuthor() {
+    public function author() {
         return $this->belongsTo(Author::class, 'author_id', 'id');
     }
 }

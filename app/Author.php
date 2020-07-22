@@ -7,7 +7,7 @@ use App\Book;
 
 class Author extends Model
 {
-    protected $fillable = array('name', 'surname');
+    protected $fillable = ['name', 'surname'];
 
     public function authorBooks() {
         return $this->hasMany(Book::class, 'author_id', 'id');
