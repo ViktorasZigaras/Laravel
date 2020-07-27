@@ -35,7 +35,7 @@ class BookController extends Controller
             return redirect()->back()->withErrors($validator);
         }
         $book = Book::create($request->all());
-        $book->save();
+        // $book->save();
         return redirect()->route('book.index')->with('success_message', '<Book Created>');
     }
 

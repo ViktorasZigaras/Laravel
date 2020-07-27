@@ -33,7 +33,7 @@ class AuthorController extends Controller
             return redirect()->back()->withErrors($validator);
         }
         $author = Author::create($request->all());
-        $author->save();
+        // $author->save();
         return redirect()->route('author.index')->with('success_message', '<Author Created>');
     }
 

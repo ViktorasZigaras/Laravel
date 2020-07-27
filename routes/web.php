@@ -19,13 +19,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::prefix('count')->group(function () {
-    Route::get('/sum/{a}/{b}', 'CountController@sumMethod');
-    Route::get('/dif/{a}/{b}', 'CountController@difMethod');
-    Route::get('/mul/{a}/{b}', 'CountController@mulMethod');
-    Route::get('/div/{a}/{b}', 'CountController@divMethod');
-});
-
 ###
 
 Route::group(['prefix' => 'authors'], function() {
