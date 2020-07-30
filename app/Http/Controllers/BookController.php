@@ -9,9 +9,46 @@ use Validator;
 
 class BookController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('book.index', ['books' => Book::all()->sortBy('title')]);
+        $authors = Author::all();
+        $selectId = 0;
+        $sort = '';
+
+        if ($request->author_id) {
+            if ($request->sort) {
+                if ($request->sort == 'title') {
+                    $books = Book::where('author_id', $request->author_id)->orderBy('title')->get();
+                    $sort = 'title';
+                } elseif ($request->sort == 'isbn') {
+                    $books = Book::where('author_id', $request->author_id)->orderBy('isbn')->get();
+                    $sort = 'isbn';
+                } else {
+                    $books = Book::all();
+                }
+            } else {
+                $books = Book::where('author_id', $request->author_id)->get();
+            }
+            $selectId = $request->author_id;
+        } else {
+            if ($request->sort) {
+                if ($request->sort == 'title') {
+                    $books = Book::orderBy('title')->get();
+                    $sort = 'title';
+                } elseif ($request->sort == 'isbn') {
+                    $books = Book::orderBy('isbn')->get();
+                    $sort = 'isbn';
+                } else {
+                    $books = Book::all();
+                }
+            } else {
+                $books = Book::all();
+            }
+        }
+
+        return view('book.index', compact('books','authors', 'selectId', 'sort'));
+
+        // return view('book.index', ['books' => Book::all()->sortBy('title')]);
     }
 
     public function create()
