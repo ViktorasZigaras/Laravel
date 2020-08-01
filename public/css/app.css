@@ -10928,3 +10928,49 @@ a.text-dark:focus {
   }
 }
 
+html,
+body {
+  color: #636b6f;
+  font-family: "Nunito", sans-serif;
+  font-weight: 200;
+  height: 100vh;
+  margin: 0;
+}
+
+body {
+  background: #aab0af;
+  background: linear-gradient(0deg, #aab0af 0%, #cfcfcf 25%, #cfcfcf 50%, #92938c 100%);
+}
+
+.welcome-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+}
+
+.center {
+  position: absolute;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.links > a {
+  color: #636b6f;
+  padding: 0 25px;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 0.1rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.links > a:hover {
+  border: 2px solid #636b6f;
+  border-radius: 10px;
+}
+
