@@ -29,7 +29,8 @@
 
                         <div class="form-group">
                            <label>About</label>
-                           <textarea type="text" name="about" value="{{old('about')}}" class="form-control" id="summernote"></textarea>
+                           <input type="hidden" name="about" value="{{old('about')}}">
+                           <div id="editor">{{old('about')}}</div>
                            <small class="form-text text-muted">Book Summary</small>
                         </div>
 
@@ -48,8 +49,9 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#summernote').summernote();
-    });
+    var quill = new Quill('#editor', {theme: 'snow'});
+    document.querySelector('#form').onsubmit = () => {
+       document.querySelector('input[name=about]').value = JSON.stringify(quill.getContents());
+    };
 </script>
 @endsection

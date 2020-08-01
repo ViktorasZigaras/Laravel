@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">Edit Book</div>
                 <div class="card-body">
-                    <form method="POST" action="{{route('book.update',[$book])}}">
+                    <form method="POST" action="{{route('book.update',[$book])}}" id="form">
 
                         <div class="form-group">
                            <label>Title</label>
@@ -29,7 +29,8 @@
 
                         <div class="form-group">
                            <label>About</label>
-                           <textarea type="text" name="about" class="form-control" id="summernote">{{old('about',$book->about)}}</textarea>
+                           <input type="hidden" name="about" value="{{old('about',$book->about)}}">
+                           <div name="about2" id="editor">{{old('about2',$book->about)}}</div>
                            <small class="form-text text-muted">Book Summary</small>
                         </div>
 
@@ -50,8 +51,10 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#summernote').summernote();
-    });
+    var quill = new Quill('#editor', {theme: 'snow'});
+    document.querySelector('#form').onsubmit = () => {
+       // document.querySelector('input[name=about]').value = quill.getContents().ops.insert;
+       document.querySelector('input[name=about]').value = JSON.stringify(quill.getContents());
+    };
 </script>
 @endsection

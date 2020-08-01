@@ -2,17 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {return view('welcome');});
 
 Auth::routes();
@@ -28,7 +17,7 @@ Route::group(['prefix' => 'authors'], function() {
     Route::get ('edit/{author}',   'AuthorController@edit')    ->name('author.edit');
     Route::post('update/{author}', 'AuthorController@update')  ->name('author.update');
     Route::post('delete/{author}', 'AuthorController@destroy') ->name('author.destroy');
-    Route::get ('show/{author}',   'AuthorController@show')    ->name('author.show');
+    // Route::get ('show/{author}',   'AuthorController@show')    ->name('author.show');
 });
 
 Route::group(['prefix' => 'books'], function() {
@@ -38,5 +27,17 @@ Route::group(['prefix' => 'books'], function() {
     Route::get ('edit/{book}',   'BookController@edit')    ->name('book.edit');
     Route::post('update/{book}', 'BookController@update')  ->name('book.update');
     Route::post('delete/{book}', 'BookController@destroy') ->name('book.destroy');
-    Route::get ('show/{book}',   'BookController@show')    ->name('book.show');
+    // Route::get ('show/{book}',   'BookController@show')    ->name('book.show');
 });
+
+// Route::group(['prefix' => 'accountsJS'], function() {
+//     Route::get ('',                 'AccountController@indexJS');
+//     Route::post('',                 'AccountController@indexJSdata');
+//     Route::post('create',           'AccountController@createJS');
+//     Route::post('store',            'AccountController@storeJS');
+//     Route::post('edit/{account}',   'AccountController@editJS');
+//     Route::post('update/{account}', 'AccountController@updateJS');
+//     Route::post('delete/{account}', 'AccountController@destroyJS');
+//     Route::post('add/{account}',    'AccountController@addJS');
+//     Route::post('remove/{account}', 'AccountController@removeJS');
+// });

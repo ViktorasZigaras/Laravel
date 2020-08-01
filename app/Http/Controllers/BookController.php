@@ -2,25 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Book;
-use App\Author;
+use App\Models\Book;
+use App\Models\Author;
 use Illuminate\Http\Request;
-use Validator;
+use App\Http\Requests\BookRequest;
 
 class BookController extends Controller
 {
-    public function index(Request $request)
-    {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
+    public function index(Request $request) {
         $authors = Author::all();
         $selectId = 0;
         $sort = '';
 
+        // $products = [];
+        // $category = Category::where('id', $request->category)->first();
+        // $productss = $category->products->toArray();
+        // foreach ($productss as $products_) {
+        //     $products[] = Product::where('id', $products_['product_id'])->first();
+        // }
+
         if ($request->author_id) {
             if ($request->sort) {
-                if ($request->sort == 'title') {
+                if ($request->sort === 'title') {
                     $books = Book::where('author_id', $request->author_id)->orderBy('title')->get();
                     $sort = 'title';
-                } elseif ($request->sort == 'isbn') {
+                } elseif ($request->sort === 'isbn') {
                     $books = Book::where('author_id', $request->author_id)->orderBy('isbn')->get();
                     $sort = 'isbn';
                 } else {
@@ -32,10 +42,10 @@ class BookController extends Controller
             $selectId = $request->author_id;
         } else {
             if ($request->sort) {
-                if ($request->sort == 'title') {
+                if ($request->sort === 'title') {
                     $books = Book::orderBy('title')->get();
                     $sort = 'title';
-                } elseif ($request->sort == 'isbn') {
+                } elseif ($request->sort === 'isbn') {
                     $books = Book::orderBy('isbn')->get();
                     $sort = 'isbn';
                 } else {
@@ -46,70 +56,31 @@ class BookController extends Controller
             }
         }
 
-        return view('book.index', compact('books','authors', 'selectId', 'sort'));
-
-        // return view('book.index', ['books' => Book::all()->sortBy('title')]);
+        return view('book.index', compact('books', 'authors', 'selectId', 'sort'));
     }
 
-    public function create()
-    {
+    public function create() {
         return view('book.create', ['authors' => Author::all()->sortBy('name')]);
     }
 
-    public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(),
-        [
-            'title' => ['required', 'min:8', 'max:64'],
-            'isbn' => ['required', 'min:8', 'max:32'],
-            'pages' => ['required', 'min:1'],
-            'about' => ['required', 'min:0', 'max:128'],
-            'author_id' => ['required'],
-        ]
-        );
-        if ($validator->fails()) {
-            $request->flash();
-            return redirect()->back()->withErrors($validator);
-        }
-        $book = Book::create($request->all());
-        // $book->save();
-        return redirect()->route('book.index')->with('success_message', '<Book Created>');
+    public function store(BookRequest $request) {
+        Book::create($request->all());
+        return redirect()->route('book.index')->with('success_message', 'Book Created.');
     }
 
-    public function show(Book $book)
-    {
-        // $a = Book::where('name', 'ona')->first();
-        // return view show
-    }
+    // public function show(Book $book) {}
 
-    public function edit(Book $book)
-    {
+    public function edit(Book $book) {
         return view('book.edit', ['book' => $book, 'authors' => Author::all()]);
     }
 
-    public function update(Request $request, Book $book)
-    {
-        $validator = Validator::make($request->all(),
-        [
-            'title' => ['required', 'min:8', 'max:64'],
-            'isbn' => ['required', 'min:8', 'max:32'],
-            'pages' => ['required', 'min:1'],
-            'about' => ['required', 'min:0', 'max:128'],
-            'author_id' => ['required'],
-        ]
-        );
-        if ($validator->fails()) {
-            $request->flash();
-            return redirect()->back()->withErrors($validator);
-        }
-        $book->fill($request->all());
-        $book->save();
-        return redirect()->route('book.index')->with('success_message', '<Book Updated>');
+    public function update(BookRequest $request, Book $book) {
+        $book->fill($request->all())->save();
+        return redirect()->route('book.index')->with('success_message', 'Book Updated.');
     }
 
-    public function destroy(Book $book)
-    {
+    public function destroy(Book $book) {
         $book->delete();
-        return redirect()->route('book.index')->with('success_message', '<Book Deleted>');
+        return redirect()->route('book.index')->with('success_message', 'Book Deleted.');
     }
 }
