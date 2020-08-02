@@ -10930,16 +10930,67 @@ a.text-dark:focus {
 
 html,
 body {
+  background-color: #fff;
   color: #636b6f;
   font-family: "Nunito", sans-serif;
   font-weight: 200;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
 }
 
 body {
   background: #aab0af;
   background: linear-gradient(0deg, #aab0af 0%, #cfcfcf 25%, #cfcfcf 50%, #92938c 100%);
+}
+
+.flex {
+  display: flex;
+}
+
+.navbar {
+  background-color: #c9c78f;
+}
+
+.navbar .nav-link {
+  border: 1px solid #c9c78f;
+}
+
+.navbar .nav-link:hover,
+.navbar .navbar-brand:hover {
+  border: 1px solid #636b6f;
+  border-radius: 10px;
+}
+
+.navbar a.dropdown-item:hover {
+  background-color: #cccccc;
+}
+
+.navbar .navbar-brand {
+  padding: 5px;
+  border: 1px solid #c9c78f;
+}
+
+.card {
+  border-radius: 5px 5px 20px 20px;
+}
+
+.card-body {
+  font-size: 16px;
+}
+
+.card-header,
+.card-body button {
+  background-color: #6660bf;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card-body button {
+  border-radius: 20px;
+  font-size: 14px;
+  padding: 5px;
+  margin-right: 15px;
 }
 
 .welcome-container {
@@ -10951,7 +11002,6 @@ body {
 }
 
 .center {
-  position: absolute;
   margin: 0;
   position: absolute;
   top: 50%;
@@ -10972,5 +11022,15 @@ body {
 .links > a:hover {
   border: 2px solid #636b6f;
   border-radius: 10px;
+}
+
+.list-text {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 40px;
+}
+
+.reset-form {
+  margin-left: 10px;
 }
 

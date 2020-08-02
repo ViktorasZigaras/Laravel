@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Edit Book</div>
                 <div class="card-body">
@@ -42,7 +42,7 @@
                             @endforeach
                         </select>
                         @csrf
-                        <button type="submit">EDIT</button>
+                        <button type="submit" class="btn btn-primary">EDIT</button>
                      </form>
                 </div>
             </div>
