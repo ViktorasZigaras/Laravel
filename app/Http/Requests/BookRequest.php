@@ -17,7 +17,7 @@ class BookRequest extends FormRequest
             'title'     => 'required|min:8|max:64',
             'isbn'      => 'required|min:8|max:32',
             'pages'     => 'required|min:1',
-            'about'     => 'required|min:0|max:128',
+            'about'     => 'required|min:0|max:256',
             'author_id' => 'required',
         ];
     }

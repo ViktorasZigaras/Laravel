@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">Create Book</div>
                 <div class="card-body">
-                    <form method="POST" action="{{route('book.store')}}">
+                    <form method="POST" action="{{route('book.store')}}" id="form">
 
                         <div class="form-group">
                            <label>Title</label>
@@ -30,7 +30,7 @@
                         <div class="form-group">
                            <label>About</label>
                            <input type="hidden" name="about" value="{{old('about')}}">
-                           <div id="editor">{{old('about')}}</div>
+                           <div id="editor"></div>
                            <small class="form-text text-muted">Book Summary</small>
                         </div>
 
@@ -50,8 +50,10 @@
 
 <script>
     var quill = new Quill('#editor', {theme: 'snow'});
+    const input = document.querySelector('input[name=about]');
+    if (input && input.value !== '') quill.setContents(JSON.parse(input.value), 'api');
     document.querySelector('#form').onsubmit = () => {
-       document.querySelector('input[name=about]').value = JSON.stringify(quill.getContents());
+       input.value = JSON.stringify(quill.getContents());
     };
 </script>
 @endsection

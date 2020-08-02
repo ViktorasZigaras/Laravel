@@ -30,7 +30,7 @@
                         <div class="form-group">
                            <label>About</label>
                            <input type="hidden" name="about" value="{{old('about',$book->about)}}">
-                           <div name="about2" id="editor">{{old('about2',$book->about)}}</div>
+                           <div name="about" id="editor"></div>
                            <small class="form-text text-muted">Book Summary</small>
                         </div>
 
@@ -52,9 +52,10 @@
 
 <script>
     var quill = new Quill('#editor', {theme: 'snow'});
+    const input = document.querySelector('input[name=about]');
+    if (input.value !== '') quill.setContents(JSON.parse(input.value), 'api');
     document.querySelector('#form').onsubmit = () => {
-       // document.querySelector('input[name=about]').value = quill.getContents().ops.insert;
-       document.querySelector('input[name=about]').value = JSON.stringify(quill.getContents());
+       input.value = JSON.stringify(quill.getContents());
     };
 </script>
 @endsection
